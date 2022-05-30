@@ -2,9 +2,22 @@ import { Configuration, OpenAIApi } from "openai";
 import Discord from "discord.js";
 import { request } from "undici";
 import dotenv from "dotenv";
+import { MessageActionRow, MessageButton } from 'discord.js';
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
+const row = new MessageActionRow()
+  .addComponents(
+    new MessageButton()
+      .setCustomId('primary')
+      .setLabel('Primary')
+      .setStyle('PRIMARY'),
+  );
+const embed = new MessageEmbed()
+  .setColor('#0099ff')
+  .setTitle('Some title')
+  .setURL('https://discord.js.org')
+  .setDescription('Some description here');
 dotenv.config();
 
 // loggin the bot in
@@ -13,14 +26,17 @@ client.login(process.env.BOT_PRIVATE_KEY);
 // logged in and ready
 client.on("ready", async () => {
 
-  let WelcomeMessage = 'Hi !\nYou can say hello, ask me for a quote or soon to be able to pass you a cat when you ask for one.\nFor whatever purpose a person might use a cat for :>\n*Whats new today is now i have an opinion !\nAsk me about anything in your mind (just include my name the sentence) and i will give you my input on that.\nOh hey btw please make sure im online before you text me this is just temporary until i make my way to the cloud.*\nSo whats new today is i made it to the cloud for one, another is madno had an alernative sarcastic personality now you can address him with ted.';
+  let WelcomeMessage = 'Hi !\n'
+    + 'You can say hello, ask me for a quote or ask for a cat.\n'
+    + 'For whatever purpose a person might use a cat for :>\n'
+    + 'NEWS !!! i have an opinion now !\n'
+    + 'Ask me about anything in your mind (just include my name the sentence) and i will give you my input on that.\n'
+    + 'So whats new today is i made it to the cloud :D,\n'
+    + 'Also madno has an alernative sarcastic personality now you can address him as ted.\n'
+    + 'just ask ted a question make sure to mention his name and he will make sure you regret even asking.';
 
-  setInterval(() => {
-    channel.send(WelcomeMessage);
-  }, 400000);
-
-  // testing space
-
+  channel.send(WelcomeMessage)
+  
 })
 
 // replying to message scenarios
