@@ -8,7 +8,7 @@ let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
 dotenv.config();
 
 // loggin the bot in
-client.login(process.env.TEST_SPACE_CHANNEL);
+client.login(process.env.BOT_PRIVATE_KEY);
 
 // logged in and ready
 client.on("ready", async () => {
