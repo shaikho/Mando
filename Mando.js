@@ -2,22 +2,9 @@ import { Configuration, OpenAIApi } from "openai";
 import Discord from "discord.js";
 import { request } from "undici";
 import dotenv from "dotenv";
-import { MessageActionRow, MessageButton } from 'discord.js';
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
-const row = new MessageActionRow()
-  .addComponents(
-    new MessageButton()
-      .setCustomId('primary')
-      .setLabel('Primary')
-      .setStyle('PRIMARY'),
-  );
-const embed = new MessageEmbed()
-  .setColor('#0099ff')
-  .setTitle('Some title')
-  .setURL('https://discord.js.org')
-  .setDescription('Some description here');
 dotenv.config();
 
 // loggin the bot in
