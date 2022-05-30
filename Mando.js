@@ -4,7 +4,6 @@ import { request } from "undici";
 import dotenv from "dotenv";
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
-let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
 dotenv.config();
 
 // loggin the bot in
@@ -12,17 +11,16 @@ client.login(process.env.BOT_PRIVATE_KEY);
 
 // logged in and ready
 client.on("ready", async () => {
-
-  let WelcomeMessage = 'Hi !\n'
-    + 'You can say hello, ask me for a quote or ask for a cat.\n'
-    + 'For whatever purpose a person might use a cat for :>\n'
-    + 'NEWS !!! i have an opinion now !\n'
-    + 'Ask me about anything in your mind (just include my name the sentence) and i will give you my input on that.\n'
-    + 'So whats new today is i made it to the cloud :D,\n'
-    + 'Also madno has an alernative sarcastic personality now you can address him as ted.\n'
-    + 'just ask ted a question make sure to mention his name and he will make sure you regret even asking.';
-
-  channel.send(WelcomeMessage)
+  // let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
+  // let WelcomeMessage = 'Hi !\n'
+  //   + 'You can say hello, ask me for a quote or ask for a cat.\n'
+  //   + 'For whatever purpose a person might use a cat for :>\n'
+  //   + 'NEWS !!! i have an opinion now !\n'
+  //   + 'Ask me about anything in your mind (just include my name the sentence) and i will give you my input on that.\n'
+  //   + 'So whats new today is i made it to the cloud :D,\n'
+  //   + 'Also madno has an alernative sarcastic personality now you can address him as ted.\n'
+  //   + 'just ask ted a question make sure to mention his name and he will make sure you regret even asking.';
+  // channel.send(WelcomeMessage)
   
 })
 
@@ -30,7 +28,7 @@ client.on("ready", async () => {
 client.on("messageCreate", async msg => {
   var Message = msg.content.toLowerCase();
   let response;
-  try {
+  // try {
     switch (Message) {
       case "ping":
         msg.reply("pong");
@@ -57,6 +55,7 @@ client.on("messageCreate", async msg => {
           break;
         }
         const { file } = await getJSONResponse(response.body);
+        let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
         channel.send({
           files: [file.toString()]
         })
@@ -103,9 +102,9 @@ client.on("messageCreate", async msg => {
         }
         break;
     }
-  } catch {
-    msg.reply("Something went wrong sorry, can you say that again ?")
-  }
+  // } catch {
+  //   msg.reply("Something went wrong sorry, can you say that again ?")
+  // }
 })
 
 // helper functions
