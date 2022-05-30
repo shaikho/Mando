@@ -4,7 +4,7 @@ import { request } from "undici";
 import dotenv from "dotenv";
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
-let channel = client.channels.cache.get(process.env.SHOW_CASE_CHANNEL);
+let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
 dotenv.config();
 
 // loggin the bot in
