@@ -23,65 +23,69 @@ client.on("ready", async () => {
 
 })
 
-// replying to message scenarios 
+// replying to message scenarios
 client.on("messageCreate", async msg => {
   var Message = msg.content.toLowerCase();
   let response;
-  switch (Message) {
-    case "ping":
-      msg.reply("pong");
-      break;
-    case "test":
-      msg.reply("this is testout");
-      break;
-    case "hi":
-      // msg.reply({ content: 'Hello!', components: [row] })
-      break;
-    case "hello":
-      msg.reply("Hello friend.");
-      setTimeout(() => {
-        msg.reply("Hello friend? That's lame. Maybe I should give you a name?");
-      }, 3000);
-      setTimeout(() => {
-        msg.reply("But that’s a slippery slope. You’re only in my head. We have to remember that.");
-      }, 4500);
-      break;
-    case "cat please":
-      response = await request('https://aws.random.cat/meow');
-      if (response.statusCode != 200) {
-        msg.reply('No cats around at the moment')
+  try {
+    switch (Message) {
+      case "ping":
+        msg.reply("pong");
         break;
-      }
-      const { file } = await getJSONResponse(response.body);
-      channel.send({
-        files: [file.toString()]
-      })
-      break;
-    case "quote please":
-      response = await request('http://loremricksum.com/api/?paragraphs=1&quotes=1')
-      const quote = await getJSONResponse(response.body);
-      msg.reply(quote.data.toString());
-      break;
-    default:
+      case "test":
+        msg.reply("this is testout");
+        break;
+      case "hi":
+        // msg.reply({ content: 'Hello!', components: [row] })
+        break;
+      case "hello":
+        msg.reply("Hello friend.");
+        setTimeout(() => {
+          msg.reply("Hello friend? That's lame. Maybe I should give you a name?");
+        }, 3000);
+        setTimeout(() => {
+          msg.reply("But that’s a slippery slope. You’re only in my head. We have to remember that.");
+        }, 4500);
+        break;
+      case "cat please":
+        response = await request('https://aws.random.cat/meow');
+        if (response.statusCode != 200) {
+          msg.reply('No cats around at the moment')
+          break;
+        }
+        const { file } = await getJSONResponse(response.body);
+        channel.send({
+          files: [file.toString()]
+        })
+        break;
+      case "quote please":
+        response = await request('http://loremricksum.com/api/?paragraphs=1&quotes=1')
+        const quote = await getJSONResponse(response.body);
+        msg.reply(quote.data.toString());
+        break;
+      default:
 
-      // still not working properly
-      if (Message.includes("mando")) {
-        Message = Message.replace("mando", "")
-        const configuration = new Configuration({
-          apiKey: process.env.OPENAI_API_KEY,
-        });
-        const openai = new OpenAIApi(configuration);
-        const response = await openai.createCompletion("text-davinci-002", {
-          prompt: Message,
-          temperature: 0.5,
-          max_tokens: 60,
-          top_p: 0.3,
-          frequency_penalty: 0.5,
-          presence_penalty: 0,
-        });
-        msg.reply(response.data.choices[0].text)
-      }
-      break;
+        // still not working properly
+        if (Message.includes("mando")) {
+          Message = Message.replace("mando", "")
+          const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY,
+          });
+          const openai = new OpenAIApi(configuration);
+          const response = await openai.createCompletion("text-davinci-002", {
+            prompt: Message,
+            temperature: 0.5,
+            max_tokens: 60,
+            top_p: 0.3,
+            frequency_penalty: 0.5,
+            presence_penalty: 0,
+          });
+          msg.reply(response.data.choices[0].text)
+        }
+        break;
+    }
+  } catch {
+    msg.reply("Something went wrong sorry, can you say that again ?")
   }
 })
 
