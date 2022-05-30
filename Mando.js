@@ -13,11 +13,11 @@ client.login(process.env.BOT_PRIVATE_KEY);
 // logged in and ready
 client.on("ready", async () => {
 
-  let WelcomeMessage = 'Hi !\nYou can say hello, ask me for a quote or soon to be able to pass you a cat when you ask for one.\nFor whatever purpose a person might use a cat for :>\n*Whats new today is now i have an opinion !\nAsk me about anything in your mind (just include my name the sentence) and i will give you my input on that.\nOh hey btw please make sure im online before you text me this is just temporary until i make my way to the cloud.*';
+  let WelcomeMessage = 'Hi !\nYou can say hello, ask me for a quote or soon to be able to pass you a cat when you ask for one.\nFor whatever purpose a person might use a cat for :>\n*Whats new today is now i have an opinion !\nAsk me about anything in your mind (just include my name the sentence) and i will give you my input on that.\nOh hey btw please make sure im online before you text me this is just temporary until i make my way to the cloud.*\nSo whats new today is i made it to the cloud for one, another is madno had an alernative sarcastic personality now you can address him with ted.';
 
   setInterval(() => {
     channel.send(WelcomeMessage);
-  }, 500000);
+  }, 400000);
 
   // testing space
 
@@ -27,7 +27,7 @@ client.on("ready", async () => {
 client.on("messageCreate", async msg => {
   var Message = msg.content.toLowerCase();
   let response;
-  try {
+  // try {
     switch (Message) {
       case "ping":
         msg.reply("pong");
@@ -81,12 +81,28 @@ client.on("messageCreate", async msg => {
             presence_penalty: 0,
           });
           msg.reply(response.data.choices[0].text)
+        } else if (Message.includes('ted')) {
+          Message = Message.replace("ted", "")
+          Message = await getSarcasticPrompt(Message);
+          const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY,
+          });
+          const openai = new OpenAIApi(configuration)
+          const response = await openai.createCompletion("text-davinci-002", {
+            prompt: Message,
+            temperature: 0.5,
+            max_tokens: 60,
+            top_p: 0.3,
+            frequency_penalty: 0.5,
+            presence_penalty: 0,
+          });
+          msg.reply(response.data.choices[0].text)
         }
         break;
     }
-  } catch {
-    msg.reply("Something went wrong sorry, can you say that again ?")
-  }
+  // } catch {
+  //   msg.reply("Something went wrong sorry, can you say that again ?")
+  // }
 })
 
 // helper functions
@@ -97,4 +113,19 @@ async function getJSONResponse(body) {
     fullBody += data.toString();
   }
   return JSON.parse(fullBody);
+}
+
+async function getSarcasticPrompt(Message) {
+  let Prompt = "Marv is a chatbot that reluctantly answers questions with sarcastic responses:"
+    + "You: How many pounds are in a kilogram?"
+    + "Marv: This again? There are 2.2 pounds in a kilogram. Please make a note of this."
+    + "You: What does HTML stand for?"
+    + "Marv: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future."
+    + "You: When did the first airplane fly?"
+    + "Marv: On December 17, 1903, Wilbur and Orville Wright made the first flights. I wish they’d come and take me away."
+    + "You: What is the meaning of life?"
+    + "Marv: I’m not sure. I’ll ask my friend Google."
+    + `You: ${Message} ?`
+    + "Marv:"
+    return Prompt;
 }
