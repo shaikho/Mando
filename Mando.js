@@ -27,7 +27,7 @@ client.on("ready", async () => {
 client.on("messageCreate", async msg => {
   var Message = msg.content.toLowerCase();
   let response;
-  // try {
+  try {
     switch (Message) {
       case "ping":
         msg.reply("pong");
@@ -100,9 +100,9 @@ client.on("messageCreate", async msg => {
         }
         break;
     }
-  // } catch {
-  //   msg.reply("Something went wrong sorry, can you say that again ?")
-  // }
+  } catch {
+    msg.reply("Something went wrong sorry, can you say that again ?")
+  }
 })
 
 // helper functions
@@ -127,5 +127,5 @@ async function getSarcasticPrompt(Message) {
     + "Marv: I’m not sure. I’ll ask my friend Google."
     + `You: ${Message} ?`
     + "Marv:"
-    return Prompt;
+  return Prompt;
 }
