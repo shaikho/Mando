@@ -4,7 +4,7 @@ import { request } from "undici";
 import dotenv from "dotenv";
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
-let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
+let channel = client.channels.cache.get(process.env.SHOW_CASE_CHANNEL);
 dotenv.config();
 
 // loggin the bot in
@@ -47,7 +47,6 @@ client.on("messageCreate", async msg => {
       }, 4500);
       break;
     case "cat please":
-      let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
       response = await request('https://aws.random.cat/meow');
       if (response.statusCode != 200) {
         msg.reply('No cats around at the moment')
