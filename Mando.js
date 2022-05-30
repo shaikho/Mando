@@ -10,7 +10,7 @@ dotenv.config();
 // loggin the bot in
 client.login(process.env.BOT_PRIVATE_KEY);
 
-// logged in and ready
+// logged in and ready test
 client.on("ready", async () => {
 
   let WelcomeMessage = 'Hi !\nYou can say hello, ask me for a quote or soon to be able to pass you a cat when you ask for one.\nFor whatever purpose a person might use a cat for :>\n*Whats new today is now i have an opinion !\nAsk me about anything in your mind (just include my name the sentence) and i will give you my input on that.\nOh hey btw please make sure im online before you text me this is just temporary until i make my way to the cloud.*';
