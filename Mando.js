@@ -35,7 +35,7 @@ client.on("messageCreate", async msg => {
       msg.reply("this is testout");
       break;
     case "hi":
-      msg.reply({ content: 'Hello!', components: [row] })
+      // msg.reply({ content: 'Hello!', components: [row] })
       break;
     case "hello":
       msg.reply("Hello friend.");
