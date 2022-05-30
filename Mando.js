@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
-import Discord, { Message } from "discord.js";
+import Discord from "discord.js";
 import { request } from "undici";
 import dotenv from "dotenv";
 
@@ -8,7 +8,7 @@ let channel = client.channels.cache.get(process.env.TEST_SPACE_CHANNEL);
 dotenv.config();
 
 // loggin the bot in
-client.login(process.env.BOT_PRIVATE_KEY);
+client.login(process.env.SHOW_CASE_CHANNEL);
 
 // logged in and ready test
 client.on("ready", async () => {
